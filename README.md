@@ -30,7 +30,16 @@ Ensure executable permissions for Python files inside the 'scripts' folder:
     source devel/setup.bash
     roslaunch assignment_2_2023 assignment1.launch
 ```
-Please note you need to change of the name of the folder from RT1_Assignment2 to assignment_2_2023. If the last command does not work please go inside the launch folder(RT1/src/assignment_2_2023/launch) and run roslaunch assignment1.launch. When running roslaunch please make sure you are running roscore in another terminator window. 
+Please note you need to change of the name of the folder from RT1_Assignment2 to assignment_2_2023. If the last command does not work please go inside the launch folder(RT1/src/assignment_2_2023/launch) and run roslaunch assignment1.launch. When running roslaunch please make sure you are running roscore in another terminator window. You also need to modify your .bashrc file and add the path of this folder to your .bashrc file.
+You can follow the following step to edit your bash file.
+
+```bash
+gedit .bashrc
+```
+```
+source your-path/devel/setup.bash
+```
+Instead of your-path it should be the original path of your folder.
 
 ## Nodes
 
