@@ -63,7 +63,7 @@ Node Execution: The script checks if it's the main module (__name__ == '__main__
 
 In summary, this ROS node provides a simple interface for users to set new goals for a robot or cancel the current goal. It utilizes an action client to communicate with a goal planning action server, and it continuously publishes the robot's position and velocity information on a specific topic.
 
-### **2. node_b.py**
+### **2. nodeB.py**
 This Python script defines a ROS node, that acts as a service client in a robotic system. Its primary purpose is to handle service requests for the last desired x and y positions. Here's a concise overview:
 
 Imports: The script imports necessary ROS modules and custom message types (Vel, Input, InputResponse).
@@ -85,7 +85,7 @@ To visualize the information, you can call the service using the following comma
 ```bash
     rosservice call /input
 ```
-3. node_c.py
+### **3. nodeC.py**
 
 
 This Python script defines a ROS node that acts as both a service client and a subscriber. The node calculates the distance between desired and actual positions and computes the average velocity within a specified window. Key components include:
