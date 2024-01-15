@@ -1,7 +1,6 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
 import rospy
-from assignment_2_2023.msg import Vel
 from assignment_2_2023.srv import Input, InputResponse
 
 # Define a class for the service
@@ -27,6 +26,9 @@ class LastTargetService:
         self.last_des_y = rospy.get_param('/des_pos_y')
         response.input_x = self.last_des_x
         response.input_y = self.last_des_y
+
+        # Log information about the service request
+        rospy.loginfo("Service request received. Responding with last target coordinates: x = %f, y = %f", self.last_des_x, self.last_des_y)
 
         # Return the response
         return response
