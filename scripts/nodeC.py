@@ -1,10 +1,9 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
 import rospy
 import math
 from assignment_2_2023.msg import Vel
 from assignment_2_2023.srv import AvgVelDis, AvgVelDisResponse
-
 
 # Define a class for the service
 class InfoService:
@@ -20,10 +19,10 @@ class InfoService:
         # Provide a service named 'info_service', using the custom service type AvgVelDis
         rospy.Service("info_service", AvgVelDis, self.get_values)
         # Subscribe to the '/pos_vel' topic, using the custom message type Vel
-        rospy.Subscriber("/pos_vel", Vel, self.get_distance_and_averagevelocity)
+        rospy.Subscriber("/pos_vel", Vel, self.update_distance_and_average_velocity)
 
     # Callback function for the subscriber
-    def get_distance_and_averagevelocity(self, msg):
+    def update_distance_and_average_velocity(self, msg):
         # Get the desired x and y positions from the parameter server
         des_x = rospy.get_param('/des_pos_x')
         des_y = rospy.get_param('/des_pos_y')
@@ -48,9 +47,11 @@ class InfoService:
 
         self.average_vel_x = sum(vel_data) / min(len(vel_data), velocity_window_size)
 
+        # Log the current values
+        rospy.loginfo("Distance: %f, Average Velocity: %f", self.distance, self.average_vel_x)
 
     # Callback function for the service
-    def get_values(self, _):      
+    def get_values(self, _):
         # Return a response with the distance and average velocity
         return AvgVelDisResponse(self.distance, self.average_vel_x)		      
 
@@ -62,14 +63,6 @@ class InfoService:
 if __name__ == "__main__":
     # Create an instance of the service class
     service = InfoService()
-    dist_vel_service = rospy.ServiceProxy('info_service', AvgVelDis)
-
-    while not rospy.is_shutdown():
-            # Call the service
-            response = dist_vel_service()
- 
-            rospy.loginfo(f"Service response:\n {response}")
- 
 
     # Start the node
     service.spin()
