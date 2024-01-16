@@ -35,10 +35,11 @@ You can follow the following step to edit your bash file.
 ```bash
 gedit .bashrc
 ```
+You should add the following line to your .bashrc file
 ```
-source your-path/devel/setup.bash
+source your-path/devel/setup.bash  %Instead of your-path it should be the original path of your folder.
+
 ```
-Instead of your-path it should be the original path of your folder.
 
 
 ## Run the program
