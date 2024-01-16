@@ -28,7 +28,6 @@ Ensure executable permissions for Python files inside the 'scripts' folder:
     cd ..
     catkin_make
     source devel/setup.bash
-    roslaunch assignment_2_2023 assignment1.launch
 ```
 Please note you need to change of the name of the folder from RT1_Assignment2 to assignment_2_2023. If the last command does not work please go inside the launch folder(RT1/src/assignment_2_2023/launch) and run roslaunch assignment1.launch. When running roslaunch please make sure you are running roscore in another terminator window. You also need to modify your .bashrc file and add the path of this folder to your .bashrc file.
 You can follow the following step to edit your bash file.
@@ -40,6 +39,15 @@ gedit .bashrc
 source your-path/devel/setup.bash
 ```
 Instead of your-path it should be the original path of your folder.
+
+
+## Run the program
+ ```bash
+    roslaunch assignment_2_2023 assignment1.launch
+```
+
+### How it works
+When the user runs the program the user can see two xterm window. One to give the instruction to the robot(nodeA) and in the other one, the user can see the average velocity continuously. The user can move the robot by pressing s and setting the x and y co-ordinate (where the user wants the robot to move). When the user sets the co-ordinates the robot starts moving in that direction. If it hits a wall, it rotates and follow the wall until it reaches the end of the wall, then it goes to the position that is set by the user. The user can also stop the current goal by pressing q on that window.
 
 ## Nodes
 
