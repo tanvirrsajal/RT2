@@ -10,7 +10,36 @@ from std_srvs.srv import SetBool
 from actionlib_msgs.msg import GoalStatus
 
 class GoalHandler:
+    """
+    A class to handle goal setting and cancelling for a robot.
+
+    Attributes:
+    -----------
+    pub : rospy.Publisher
+        A ROS publisher to publish position and velocity.
+    client : actionlib.SimpleActionClient
+        An action client to communicate with the goal reaching server.
+    goal_cancelled : bool
+        A flag to track if the current goal has been cancelled.
+
+    Methods:
+    --------
+    handle_goal_commands():
+        Main loop for handling goal commands.
+    subscribe_to_odometry():
+        Subscribe to /odom topic to get position and velocity updates.
+    set_new_goal():
+        Set a new goal based on user input.
+    cancel_current_goal():
+        Cancel the current goal if there is one.
+    publish_position_velocity(msg):
+        Publish current position and velocity.
+    """
+
     def __init__(self):
+        """
+        Initialize the GoalHandler class by setting up ROS node, publisher, and action client.
+        """
         # Initialize the ROS node
         rospy.init_node('set_target_client')
 
@@ -21,6 +50,11 @@ class GoalHandler:
         self.goal_cancelled = True  # Flag to track if the current goal has been cancelled
 
     def handle_goal_commands(self):
+        """
+        Main loop for handling goal commands from the user.
+        
+        It continuously listens for user input to set new goals or cancel current goals.
+        """
         # Main loop for handling goal commands
         while not rospy.is_shutdown():
             self.subscribe_to_odometry()
@@ -34,10 +68,18 @@ class GoalHandler:
                 rospy.logwarn("Invalid command. Please enter 's' or 'q'.")
 
     def subscribe_to_odometry(self):
+        """
+        Subscribe to the /odom topic to get position and velocity updates.
+        """
         # Subscribe to /odom topic to get position and velocity updates
         rospy.Subscriber("/odom", Odometry, self.publish_position_velocity)
 
     def set_new_goal(self):
+        """
+        Set a new goal based on user input.
+        
+        It retrieves the current goal position parameters and prompts the user to input new coordinates.
+        """
         # Set a new goal based on user input
         target_pos_x = rospy.get_param('/des_pos_x')
         target_pos_y = rospy.get_param('/des_pos_y')
@@ -64,6 +106,11 @@ class GoalHandler:
         rospy.loginfo("New goal set: x = %f, y = %f", input_x, input_y)
 
     def cancel_current_goal(self):
+        """
+        Cancel the current goal if there is one.
+        
+        It checks if there is an active goal, and if so, cancels it.
+        """
         # Cancel the current goal if there is one
         if not self.goal_cancelled:
             self.goal_cancelled = True
@@ -73,6 +120,14 @@ class GoalHandler:
             rospy.loginfo("No active goal to cancel")
 
     def publish_position_velocity(self, msg):
+        """
+        Publish the current position and velocity of the robot.
+        
+        Parameters:
+        -----------
+        msg : nav_msgs.msg.Odometry
+            The odometry message containing the robot's current position and velocity.
+        """
         # Publish current position and velocity
         current_pos = msg.pose.pose.position
         current_vel_linear = msg.twist.twist.linear
@@ -87,9 +142,13 @@ class GoalHandler:
         self.pub.publish(pos_and_vel)
 
 def main():
+    """
+    Initialize the GoalHandler and start handling goal commands.
+    """
     # Initialize the GoalHandler and start handling goal commands
     handler = GoalHandler()
     handler.handle_goal_commands()
 
 if __name__ == '__main__':
     main()
+

@@ -5,7 +5,24 @@ from assignment_2_2023.srv import Input, InputResponse
 
 # Define a class for the service
 class LastTargetService:
+    """
+    A ROS service class to provide the last desired target coordinates.
+    
+    Attributes
+    ----------
+    last_des_x : float
+        The last desired x position.
+    last_des_y : float
+        The last desired y position.
+    """
+
     def __init__(self):
+        """
+        Initializes the LastTargetService class.
+        
+        This method initializes the class variables for the last desired x and y positions,
+        initializes the ROS node, and sets up the service to respond with the last target coordinates.
+        """
         # Initialize class variables for the last desired x and y positions
         self.last_des_x = 0
         self.last_des_y = 0
@@ -17,8 +34,23 @@ class LastTargetService:
         # Provide a service named 'input', using the custom service type Input
         rospy.Service('input', Input, self.result_callback)
 
-    # Callback function for the service
     def result_callback(self, _):
+        """
+        Callback function for the service.
+        
+        This method is called when a service request is received. It sets the response message
+        with the last desired x and y positions retrieved from the ROS parameter server.
+        
+        Parameters
+        ----------
+        _ : InputRequest
+            The service request (not used in this function).
+        
+        Returns
+        -------
+        InputResponse
+            The response message containing the last desired x and y positions.
+        """
         # Create a response message
         response = InputResponse()
         # Set the x and y inputs in the response to the last desired positions
@@ -33,8 +65,12 @@ class LastTargetService:
         # Return the response
         return response
 
-    # Function to keep the node running
     def spin(self):
+        """
+        Keeps the node running.
+        
+        This method keeps the ROS node active and responsive to service requests.
+        """
         rospy.spin()
 
 # Main function
@@ -43,3 +79,4 @@ if __name__ == "__main__":
     service = LastTargetService()
     # Start the node
     service.spin()
+
