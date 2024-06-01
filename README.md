@@ -1,10 +1,11 @@
-# RT1 Assignment2 - Robot Simulation Control Using ROS
-
 Update1: The documentation for the assignment is done using spinix. The index.html file can be found inside the docs folder, can be opened in the browser and the live page can be seen from : https://tanvirrsajal.github.io/RT2/
+
 Update2: Also here the goals and cancel goals command was sent using jupyter notebook. Also the trajectopry and the sent goals are plotted in the notebook as well. Before running the jupyter notebook it's needed to run the environment(command given below) first then open the notebook by writing the following command in the terminal. 
 ```bash
 jupyter notebook --allow-root --ip 0.0.0.0
 ```
+# RT1 Assignment2 - Robot Simulation Control Using ROS
+
 The goal for this project was to develop 3 nodes to send target destination to the robot, storing the information to the server and showing the average velocity & distance of the robot from the target. There are other node files which were already developed.
 
 ## Permissions
